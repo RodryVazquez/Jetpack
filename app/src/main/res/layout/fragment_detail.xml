@@ -3,28 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.DetailFragment">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/itemImageView"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Detail Fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@mipmap/ic_main_icon"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="5dp"
+            android:minHeight="200dp"
+            android:layout_centerHorizontal="true"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnListFragment"
+        <TextView
+            android:id="@+id/txtFirstTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_list" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_below="@+id/itemImageView"
+            android:text="item-first-title"
+            style="@style/Title"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:id="@+id/txtSecondTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtFirstTitle"
+            android:text="item-second-subtitle"
+            style="@style/Subtitle"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:id="@+id/txtThirdTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtSecondTitle"
+            android:text="item-third-subtitle"
+            style="@style/Subtitle"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:id="@+id/txtFourTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtThirdTitle"
+            android:text="item-four-subtitle"
+            style="@style/Subtitle"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp" />
+    </RelativeLayout>
 </layout>

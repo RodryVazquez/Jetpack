@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,11 +21,6 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        btnDetailsFragment.setOnClickListener {
-            val action = ListFragmentDirections.actionDetailFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
     }
 
 }

@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 class DetailFragment : Fragment() {
 
+    private var detailId = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,9 +24,9 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnListFragment.setOnClickListener {
-            val action = DetailFragmentDirections.actionListFragment()
-            Navigation.findNavController(it).navigate(action)
+
+        arguments?.let {
+            detailId = DetailFragmentArgs.fromBundle(it).detailId
         }
     }
 }
