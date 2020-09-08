@@ -7,7 +7,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ListFragment">
+        tools:context=".view.ListFragment"
+        android:id="@+id/refreshLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,6 +22,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -32,20 +34,21 @@
                 android:id="@+id/txtError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/get_data_error_message"
-                app:layout_constraintBottom_toBottomOf="@+id/mainList"
-                app:layout_constraintEnd_toEndOf="@+id/mainList"
-                app:layout_constraintStart_toStartOf="@+id/mainList"
-                app:layout_constraintTop_toTopOf="@+id/mainList" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
                 android:id="@+id/pgrLoadingView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/mainList"
-                app:layout_constraintEnd_toEndOf="@+id/mainList"
-                app:layout_constraintStart_toStartOf="@+id/mainList"
-                app:layout_constraintTop_toTopOf="@+id/mainList" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
