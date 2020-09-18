@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.jetpack.R
+import com.example.jetpack.databinding.FragmentDetailBinding
 import com.example.jetpack.util.getProgressDrawable
 import com.example.jetpack.util.loadImage
 import com.example.jetpack.viewmodel.DetailViewModel
@@ -18,11 +20,15 @@ class DetailFragment : Fragment() {
     private var detailId = 0
     private lateinit var detailViewModel: DetailViewModel
 
+    private lateinit var dataBinding: FragmentDetailBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,9 +49,7 @@ class DetailFragment : Fragment() {
     private fun observeViewModel() {
         detailViewModel.currentItem.observe(this, Observer { itemBread ->
             itemBread?.let {
-                txtFirstTitle.text = it.ItemName
-                txtSecondTitle.text = it.ItemLifeSpan
-                itemImageView.loadImage(itemBread.ItemImageUrl, getProgressDrawable(context!!))
+               dataBinding.detailItem = itemBread
             }
         })
     }
