@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="item"
+            type="com.example.jetpack.model.ItemBreed" />
+        
+        <variable
+            name="listener"
+            type="com.example.jetpack.view.ItemClickListener" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
+        android:onClick="@{listener::onItemClickListener}"
         android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/itemId"
+            android:text="@{item.itemId}"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/imgMainIcon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_main_icon"
             android:layout_weight="2"
+            android:imageUrl="@{item.itemImageUrl}"
             android:padding="3dp"/>
 
         <LinearLayout
@@ -26,14 +44,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Title"
-                android:text="text-legend"/>
+                android:text="@{item.itemName}"/>
 
             <TextView
                 android:id="@+id/txtSubtitleLegend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Subtitle"
-                android:text="text-legend-subtitle"/>
+                android:text="@{item.itemLifeSpan}"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

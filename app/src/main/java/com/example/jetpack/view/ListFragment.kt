@@ -1,12 +1,11 @@
 package com.example.jetpack.view
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jetpack.R
 import com.example.jetpack.view.adapters.ItemAdapter
@@ -28,6 +27,8 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         itemViewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
         itemViewModel.refresh()
 
@@ -46,6 +47,21 @@ class ListFragment : Fragment() {
         }
 
         observeViewModel()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        return inflater.inflate(R.menu.action_settings, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_settings ->{
+                val action  = ListFragmentDirections.actionListFragmentToSettingsFragment()
+                Navigation.findNavController(view!!).navigate(action)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun observeViewModel() {
@@ -72,4 +88,6 @@ class ListFragment : Fragment() {
             }
         })
     }
+
+
 }

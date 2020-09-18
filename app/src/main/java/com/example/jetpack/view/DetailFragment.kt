@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.jetpack.R
+import com.example.jetpack.util.getProgressDrawable
+import com.example.jetpack.util.loadImage
 import com.example.jetpack.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 
@@ -43,6 +45,7 @@ class DetailFragment : Fragment() {
             itemBread?.let {
                 txtFirstTitle.text = it.ItemName
                 txtSecondTitle.text = it.ItemLifeSpan
+                itemImageView.loadImage(itemBread.ItemImageUrl, getProgressDrawable(context!!))
             }
         })
     }
