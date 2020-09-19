@@ -8,16 +8,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.jetpack.R
 
-fun getProgressDrawable(context: Context): CircularProgressDrawable{
-   return CircularProgressDrawable(context).apply {
-       strokeWidth = 10f
-       centerRadius = 50f
-       start()
-   }
+fun getProgressDrawable(context: Context): CircularProgressDrawable {
+    return CircularProgressDrawable(context).apply {
+        strokeWidth = 10f
+        centerRadius = 50f
+        start()
+    }
 }
 
-fun ImageView.loadImage(uri : String?, progressDrawable: CircularProgressDrawable){
-    val options  = RequestOptions()
+fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable) {
+    val options = RequestOptions()
         .placeholder(progressDrawable)
         .error(R.mipmap.ic_main_icon)
 
@@ -28,6 +28,6 @@ fun ImageView.loadImage(uri : String?, progressDrawable: CircularProgressDrawabl
 }
 
 @BindingAdapter("android:imageUrl")
-fun loadImage(view: ImageView, url:String?){
+fun loadImage(view: ImageView, url: String?) {
     view.loadImage(url, getProgressDrawable(view.context))
 }

@@ -1,18 +1,24 @@
 package com.example.jetpack.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jetpack.model.ItemApiService
 import com.example.jetpack.model.ItemBreed
+import com.example.jetpack.model.persistence.ItemDatabase
+import com.example.jetpack.util.SharePreferenceUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
-class ItemViewModel : ViewModel() {
+class ItemViewModel(application: Application) : BaseViewModel(application) {
 
     private val itemService = ItemApiService()
     private val disposable = CompositeDisposable()
+
+    private var sharePreferenceUtil = SharePreferenceUtil(getApplication())
 
     val itemList = MutableLiveData<List<ItemBreed>>()
     val loadError = MutableLiveData<Boolean>()
@@ -30,9 +36,7 @@ class ItemViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<ItemBreed>>() {
                     override fun onSuccess(t: List<ItemBreed>) {
-                        itemList.value = t
-                        loading.value = false
-                        loadError.value = false
+                        saveItemsLocally(t)
                     }
 
                     override fun onError(e: Throwable) {
@@ -42,6 +46,30 @@ class ItemViewModel : ViewModel() {
                     }
                 })
         )
+    }
+
+    private fun processResponse(items: List<ItemBreed>){
+        itemList.postValue(items)
+        loading.value = false
+        loadError.value = false
+    }
+
+    private fun saveItemsLocally(items: List<ItemBreed>){
+        launch {
+            val dao = ItemDatabase(getApplication()).itemDao()
+            dao.deleteAll()
+
+            val result = dao.insertAll(*items.toTypedArray())
+            var i = 0
+
+            while (i < items.size) {
+                items[i].uuid = result[i].toInt()
+                i++
+            }
+            processResponse(items)
+        }
+
+        sharePreferenceUtil.saveUpdateTime(System.nanoTime())
     }
 
     override fun onCleared() {
