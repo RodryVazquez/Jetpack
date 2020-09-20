@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.jetpack.model.ItemApiService
 import com.example.jetpack.model.ItemBreed
 import com.example.jetpack.model.persistence.ItemDatabase
+import com.example.jetpack.util.NotificationUtil
 import com.example.jetpack.util.SharePreferenceUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -15,9 +16,8 @@ import kotlinx.coroutines.launch
 class ItemViewModel(application: Application) : BaseViewModel(application) {
 
     private val itemService = ItemApiService()
-    private val disposable = CompositeDisposable()
-
     private var sharePreferenceUtil = SharePreferenceUtil(getApplication())
+    private var notificationUtil = NotificationUtil(getApplication())
 
     private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
@@ -56,6 +56,8 @@ class ItemViewModel(application: Application) : BaseViewModel(application) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<ItemBreed>>() {
                     override fun onSuccess(t: List<ItemBreed>) {
+
+                        notificationUtil.createNotification()
                         saveItemsLocally(t)
                     }
 
@@ -95,6 +97,5 @@ class ItemViewModel(application: Application) : BaseViewModel(application) {
     override fun onCleared() {
         super.onCleared()
         loading.value = true
-        disposable.clear()
     }
 }
