@@ -7,7 +7,7 @@
         
         <variable
             name="listener"
-            type="com.example.jetpack.view.ItemClickListener" />
+            type="com.example.jetpack.view.interfaces.ItemClickListener" />
     </data>
 
     <LinearLayout
@@ -17,8 +17,8 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/itemId"
-            android:text="@{item.itemId}"
+            android:id="@+id/itemUuId"
+            android:text="@{String.valueOf(item.uuid)}"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

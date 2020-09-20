@@ -41,7 +41,7 @@ class ListFragment : Fragment() {
             mainList.visibility = View.GONE
             txtError.visibility = View.GONE
             pgrLoadingView.visibility = View.VISIBLE
-            itemViewModel.refresh()
+            itemViewModel.refreshFromRemote()
 
             refreshLayout.isRefreshing = false
         }
@@ -68,7 +68,7 @@ class ListFragment : Fragment() {
         itemViewModel.itemList.observe(this, Observer { items ->
             items?.let {
                 mainList.visibility = View.VISIBLE
-                itemAdapter.updateItemList(items)
+                 itemAdapter.updateItemList(items)
             }
         })
 

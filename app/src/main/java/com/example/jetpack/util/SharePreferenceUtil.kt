@@ -33,4 +33,6 @@ class SharePreferenceUtil {
             it.edit().putLong(PREF_TIME, time).apply()
         }
     }
+
+    fun getUpdateTime() = prefs?.getLong(PREF_TIME, 0)
 }

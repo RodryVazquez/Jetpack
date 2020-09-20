@@ -2,7 +2,6 @@ package com.example.jetpack.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.jetpack.model.ItemApiService
 import com.example.jetpack.model.ItemBreed
 import com.example.jetpack.model.persistence.ItemDatabase
@@ -20,12 +19,33 @@ class ItemViewModel(application: Application) : BaseViewModel(application) {
 
     private var sharePreferenceUtil = SharePreferenceUtil(getApplication())
 
+    private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
+
     val itemList = MutableLiveData<List<ItemBreed>>()
     val loadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
 
     fun refresh() {
+        val updatedTime = sharePreferenceUtil.getUpdateTime()
+        if (updatedTime != null && updatedTime != 0L &&
+            System.nanoTime() - updatedTime < refreshTime
+        ) {
+            fetchFromDatabase()
+        } else {
+            fetchFromRemote()
+        }
+    }
+
+    fun refreshFromRemote() {
         fetchFromRemote()
+    }
+
+    private fun fetchFromDatabase() {
+        loading.value = true
+        launch {
+            val items = ItemDatabase(getApplication()).itemDao().getAllItems()
+            processResponse(items)
+        }
     }
 
     private fun fetchFromRemote() {
@@ -48,13 +68,13 @@ class ItemViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
-    private fun processResponse(items: List<ItemBreed>){
+    private fun processResponse(items: List<ItemBreed>) {
         itemList.postValue(items)
         loading.value = false
         loadError.value = false
     }
 
-    private fun saveItemsLocally(items: List<ItemBreed>){
+    private fun saveItemsLocally(items: List<ItemBreed>) {
         launch {
             val dao = ItemDatabase(getApplication()).itemDao()
             dao.deleteAll()

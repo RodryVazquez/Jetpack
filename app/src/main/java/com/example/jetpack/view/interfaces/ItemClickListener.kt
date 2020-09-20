@@ -1,4 +1,4 @@
-package com.example.jetpack.view
+package com.example.jetpack.view.interfaces
 
 import android.view.View
 

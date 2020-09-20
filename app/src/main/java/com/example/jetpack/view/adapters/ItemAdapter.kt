@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jetpack.R
 import com.example.jetpack.databinding.ItemListBinding
 import com.example.jetpack.model.ItemBreed
-import com.example.jetpack.util.getProgressDrawable
-import com.example.jetpack.util.loadImage
-import com.example.jetpack.view.ItemClickListener
+import com.example.jetpack.view.interfaces.ItemClickListener
 import com.example.jetpack.view.ListFragmentDirections
 import kotlinx.android.synthetic.main.item_list.view.*
 
@@ -41,9 +39,9 @@ class ItemAdapter(val itemList: ArrayList<ItemBreed>) :
     }
 
     override fun onItemClickListener(view: View) {
-        val itemId = view.itemId.text.toString().toInt()
+        val itemUUID = view.itemUuId.text.toString().toInt()
         val action = ListFragmentDirections.actionDetailFragment()
-        action.detailId = itemId
+        action.detailId = itemUUID
         Navigation.findNavController(view).navigate(action)
     }
 }
