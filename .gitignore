@@ -12,3 +12,5 @@
 .externalNativeBuild
 .cxx
 .gradle
+/.idea/
+/gradle/wrapper/
